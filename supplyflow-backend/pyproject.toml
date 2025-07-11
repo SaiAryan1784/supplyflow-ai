@@ -1,0 +1,32 @@
+[project]
+name = "supplyflow-backend"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiofiles>=24.1.0",
+    "groq>=0.29.0",
+    "httpx>=0.26.0",
+    "networkx>=3.5",
+    "numpy>=2.3.1",
+    "ollama-python>=0.1.2",
+    "pandas>=2.3.1",
+    "pydantic-settings>=2.10.1",
+    "pytest>=8.4.1",
+    "python-dotenv>=1.1.1",
+    "python-multipart>=0.0.20",
+    "qdrant-client>=1.14.3",
+    "scikit-learn>=1.7.0",
+    "scipy>=1.16.0",
+    "torch-geometric>=2.6.1",
+    "websockets>=15.0.1",
+]
+
+[dependency-groups]
+dev = [
+    "black>=25.1.0",
+    "isort>=6.0.1",
+    "mypy>=1.16.1",
+    "ruff>=0.12.3",
+]
