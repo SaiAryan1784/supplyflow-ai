@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,6 +13,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Loading } from "@/components/ui/loading";
+import { useAuth } from "@/contexts/auth-context";
 import {
   Brain,
   Activity,
@@ -73,6 +76,25 @@ const stats = [
 
 export default function HomePage() {
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
+  const { isAuthenticated, isLoading } = useAuth();
+  const router = useRouter();
+
+  // Redirect authenticated users to dashboard
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, isLoading, router]);
+
+  // Show loading while checking authentication
+  if (isLoading) {
+    return <Loading size="xl" variant="brand" text="Loading..." className="min-h-screen flex items-center justify-center" />;
+  }
+
+  // Don't render if user is authenticated (will redirect)
+  if (isAuthenticated) {
+    return <Loading size="xl" variant="brand" text="Redirecting to dashboard..." className="min-h-screen flex items-center justify-center" />;
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -103,17 +125,17 @@ export default function HomePage() {
             <Button
               asChild
               size="lg"
-              className="bg-gradient-to-r from-supply-primary to-supply-secondary hover:from-supply-primary/90 hover:to-supply-secondary/90"
+              className="bg-gradient-to-r from-supply-primary to-supply-secondary hover:from-supply-primary/90 hover:to-supply-secondary/90 text-white font-semibold shadow-lg"
             >
-              <Link href="/dashboard">
-                Launch Dashboard
+              <Link href="/auth/register">
+                Get Started
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
 
             <Button asChild variant="outline" size="lg">
-              <Link href="/copilot">
-                Try AI Copilot
+              <Link href="/auth/login">
+                Sign In
                 <Brain className="ml-2 w-4 h-4" />
               </Link>
             </Button>
@@ -214,9 +236,9 @@ export default function HomePage() {
               <Button
                 asChild
                 size="lg"
-                className="bg-foreground text-background hover:bg-foreground/90"
+                className="bg-foreground text-background hover:bg-foreground/90 font-semibold shadow-lg"
               >
-                <Link href="/dashboard">
+                <Link href="/auth/register">
                   Get Started Now
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>

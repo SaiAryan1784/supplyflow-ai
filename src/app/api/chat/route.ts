@@ -13,30 +13,38 @@ export async function POST(request: NextRequest) {
     // Apply rate limiting
     await limiter.check(request, 10) // 10 requests per minute per IP
     
-    const { message, context, conversationHistory }: {
-      message: string;
-      context?: string;
-      conversationHistory?: Array<{ role: string; content: string }>;
+    // The useChat hook sends data in this format: { messages: Array<{ role, content }> }
+    const { messages }: {
+      messages: Array<{ role: string; content: string }>;
     } = await request.json()
     
-    if (!message) {
+    if (!messages || messages.length === 0) {
       return NextResponse.json(
-        { error: 'Message is required' },
+        { error: 'Messages array is required' },
         { status: 400 }
       )
     }
 
-    // Build context from conversation history
-    let enhancedContext = context || ''
-    if (conversationHistory && conversationHistory.length > 0) {
-      const recentMessages = conversationHistory.slice(-5) // Last 5 messages
-      enhancedContext += `\n\nRecent conversation:\n${recentMessages
-        .map((msg: { role: string; content: string }) => `${msg.role}: ${msg.content}`)
-        .join('\n')}`
+    // Get the latest user message
+    const lastMessage = messages[messages.length - 1]
+    if (!lastMessage || !lastMessage.content) {
+      return NextResponse.json(
+        { error: 'Valid message content is required' },
+        { status: 400 }
+      )
     }
 
-    // Stream response back to client
-    const stream = await supplyChainAI.streamResponse(message, enhancedContext)
+    // Build context from conversation history (exclude the last message as it's the current prompt)
+    let enhancedContext = ''
+    if (messages.length > 1) {
+      const recentMessages = messages.slice(-6, -1) // Last 5 messages before current
+      enhancedContext = `Recent conversation:\n${recentMessages
+        .map((msg: { role: string; content: string }) => `${msg.role}: ${msg.content}`)
+        .join('\n')}\n\n`
+    }
+
+    // Stream response back to client using the AI SDK format
+    const stream = await supplyChainAI.streamResponse(lastMessage.content, enhancedContext)
     
     return stream
   } catch (error) {

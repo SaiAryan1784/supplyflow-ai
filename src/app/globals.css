@@ -95,18 +95,18 @@
   --card-foreground: oklch(0.985 0.001 106.423);
   --popover: oklch(0.216 0.006 56.043);
   --popover-foreground: oklch(0.985 0.001 106.423);
-  --primary: oklch(0.923 0.003 48.717);
-  --primary-foreground: oklch(0.216 0.006 56.043);
-  --secondary: oklch(0.268 0.007 34.298);
+  --primary: oklch(0.8 0.1 264.376);
+  --primary-foreground: oklch(0.147 0.004 49.25);
+  --secondary: oklch(0.35 0.02 34.298);
   --secondary-foreground: oklch(0.985 0.001 106.423);
   --muted: oklch(0.268 0.007 34.298);
   --muted-foreground: oklch(0.709 0.01 56.259);
-  --accent: oklch(0.268 0.007 34.298);
+  --accent: oklch(0.35 0.02 34.298);
   --accent-foreground: oklch(0.985 0.001 106.423);
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.985 0.001 106.423);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
+  --border: oklch(1 0 0 / 20%);
+  --input: oklch(1 0 0 / 25%);
   --ring: oklch(0.553 0.013 58.071);
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
@@ -123,7 +123,7 @@
   --sidebar-ring: oklch(0.553 0.013 58.071);
   
   /* Supply Chain specific colors - Dark mode */
-  --supply-primary: oklch(0.588 0.243 264.376); /* Brighter purple-blue for dark mode */
+  --supply-primary: oklch(0.688 0.243 264.376); /* Brighter purple-blue for dark mode */
   --supply-secondary: oklch(0.796 0.17 162.48); /* Brighter cyan for dark mode */
   --supply-accent: oklch(0.869 0.188 70.08); /* Brighter orange for dark mode */
   --supply-success: oklch(0.727 0.265 142.5); /* Brighter green for dark mode */

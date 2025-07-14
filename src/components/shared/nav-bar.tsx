@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Package2, Search, Bell, User } from "lucide-react";
+import { useAuth } from "@/contexts/auth-context";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
@@ -17,6 +18,7 @@ import {
 
 export function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuth();
 
   const navigation = [
     { name: "Dashboard", href: "/dashboard" },
@@ -24,7 +26,6 @@ export function NavBar() {
     { name: "Routing", href: "/routing" },
     { name: "Disruptions", href: "/disruptions" },
     { name: "Forecasting", href: "/forecasting" },
-    { name: "Analytics", href: "/analytics" },
   ];
 
   return (
@@ -103,12 +104,16 @@ export function NavBar() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              {user?.name || "My Account"}
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={logout}>
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

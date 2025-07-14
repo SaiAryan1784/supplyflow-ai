@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@ai-sdk/groq": "^1.2.9",
-
     "@hono/node-server": "^1.15.0",
     "@langchain/community": "^0.3.48",
     "@langchain/qdrant": "^0.1.2",
@@ -46,6 +45,7 @@
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.3.1",
     "three": "^0.178.0",
+    "zod": "^3.25.76",
     "zustand": "^5.0.6"
   },
   "devDependencies": {

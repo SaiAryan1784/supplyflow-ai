@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
@@ -96,7 +97,7 @@ const quickActions = [
     description: "Start a new supply chain order",
     icon: Plus,
     color: "bg-supply-primary/20 text-supply-primary",
-    href: "/orders/new",
+    href: "/dashboard", // Temporary redirect to dashboard until orders page is created
   },
   {
     title: "AI Analysis",
@@ -110,14 +111,14 @@ const quickActions = [
     description: "Optimize shipping routes",
     icon: Network,
     color: "bg-supply-success/20 text-supply-success",
-    href: "/routes",
+    href: "/routing", // Fixed to use existing routing page
   },
   {
-    title: "Analytics",
-    description: "View detailed analytics",
+    title: "View Forecasting",
+    description: "View demand forecasting and predictions",
     icon: BarChart3,
     color: "bg-supply-secondary/20 text-supply-secondary",
-    href: "/analytics",
+    href: "/forecasting", // Fixed to use existing forecasting page
   },
 ];
 
@@ -234,27 +235,28 @@ export default function DashboardPage() {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {quickActions.map((action, index) => (
-                    <motion.button
-                      key={index}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="p-4 rounded-lg border border-border bg-card/50 hover:bg-card/80 transition-all text-left"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-10 h-10 rounded-lg ${action.color} flex items-center justify-center`}>
-                          <action.icon className="w-5 h-5" />
-                        </div>
-                        <div className="flex-1">
-                          <div className="font-medium text-foreground">
-                            {action.title}
+                    <Link key={index} href={action.href}>
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        className="p-4 rounded-lg border border-border bg-card/50 hover:bg-card/80 transition-all cursor-pointer"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-lg ${action.color} flex items-center justify-center`}>
+                            <action.icon className="w-5 h-5" />
                           </div>
-                          <div className="text-sm text-muted-foreground">
-                            {action.description}
+                          <div className="flex-1">
+                            <div className="font-medium text-foreground">
+                              {action.title}
+                            </div>
+                            <div className="text-sm text-muted-foreground">
+                              {action.description}
+                            </div>
                           </div>
+                          <ArrowRight className="w-4 h-4 text-muted-foreground" />
                         </div>
-                        <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                      </div>
-                    </motion.button>
+                      </motion.div>
+                    </Link>
                   ))}
                 </div>
               </CardContent>
@@ -300,8 +302,10 @@ export default function DashboardPage() {
                   </div>
                 ))}
                 
-                <Button variant="outline" className="w-full mt-4">
-                  View All Alerts
+                <Button asChild variant="outline" className="w-full mt-4">
+                  <Link href="/disruptions">
+                    View All Alerts
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
