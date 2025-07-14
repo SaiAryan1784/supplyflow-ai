@@ -88,7 +88,7 @@ export function Suggestions({ onSuggestionClick }: SuggestionsProps) {
             <motion.div
               key={index}
               initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
+              animate={{ opacity: 1, x: 0 }}  
               transition={{ delay: 0.1 * index }}
             >
               <Button
@@ -100,7 +100,7 @@ export function Suggestions({ onSuggestionClick }: SuggestionsProps) {
                   <suggestion.icon className={`w-4 h-4 mt-0.5 ${suggestion.color} group-hover:scale-110 transition-transform`} />
                   <div className="flex-1 min-w-0">
                     <div className="text-xs text-slate-400 mb-1">{suggestion.category}</div>
-                    <div className="text-sm text-slate-200 leading-relaxed">
+                    <div className="text-sm text-black leading-relaxed">
                       {suggestion.text}
                     </div>
                   </div>
