@@ -13,7 +13,11 @@ export async function POST(request: NextRequest) {
     // Apply rate limiting
     await limiter.check(request, 10) // 10 requests per minute per IP
     
-    const { message, context, conversationHistory } = await request.json()
+    const { message, context, conversationHistory }: {
+      message: string;
+      context?: string;
+      conversationHistory?: Array<{ role: string; content: string }>;
+    } = await request.json()
     
     if (!message) {
       return NextResponse.json(
@@ -27,7 +31,7 @@ export async function POST(request: NextRequest) {
     if (conversationHistory && conversationHistory.length > 0) {
       const recentMessages = conversationHistory.slice(-5) // Last 5 messages
       enhancedContext += `\n\nRecent conversation:\n${recentMessages
-        .map((msg: any) => `${msg.role}: ${msg.content}`)
+        .map((msg: { role: string; content: string }) => `${msg.role}: ${msg.content}`)
         .join('\n')}`
     }
 

@@ -1,4 +1,4 @@
-import { sqliteTable, text, integer, real, blob } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, integer, real } from 'drizzle-orm/sqlite-core'
 import { sql } from 'drizzle-orm'
 
 // Supply Chain Nodes (Suppliers, Warehouses, Stores)
@@ -127,4 +127,11 @@ export const analysisResults = sqliteTable('analysis_results', {
 // Performance metrics
 export const metrics = sqliteTable('metrics', {
   id: text('id').primaryKey(),
-  metricType: text('metric_type').notNull(), //
+  metricType: text('metric_type').notNull(), // 'throughput', 'latency', 'cost', 'quality'
+  value: real('value').notNull(),
+  unit: text('unit').notNull(),
+  timestamp: text('timestamp').notNull(),
+  nodeId: text('node_id').references(() => nodes.id),
+  metadata: text('metadata'), // JSON string
+  createdAt: text('created_at').default(sql`(datetime('now'))`),
+})

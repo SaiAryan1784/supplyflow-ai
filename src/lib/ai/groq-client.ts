@@ -74,7 +74,7 @@ export class GroqSupplyChainAI {
   }
 
   // Generate structured supply chain analysis
-  async analyzeSupplyChain(data: any) {
+  async analyzeSupplyChain(data: Record<string, unknown>) {
     const analysisSchema = z.object({
       riskLevel: z.enum(['low', 'medium', 'high', 'critical']),
       riskFactors: z.array(z.string()),
@@ -99,7 +99,7 @@ export class GroqSupplyChainAI {
   }
 
   // Generate disruption response plan
-  async generateDisruptionResponse(disruption: any) {
+  async generateDisruptionResponse(disruption: Record<string, unknown>) {
     const responseSchema = z.object({
       severity: z.enum(['low', 'medium', 'high', 'critical']),
       affectedRoutes: z.array(z.string()),
@@ -142,7 +142,7 @@ Provide a quick recommendation with reasoning (max 3 sentences).`
   }
 
   // Demand forecasting insights
-  async analyzeDemandPattern(historicalData: any) {
+  async analyzeDemandPattern(historicalData: Record<string, unknown>) {
     const forecastSchema = z.object({
       trend: z.enum(['increasing', 'decreasing', 'stable', 'volatile']),
       seasonality: z.boolean(),
@@ -171,7 +171,7 @@ Provide a quick recommendation with reasoning (max 3 sentences).`
 export const supplyChainAI = new GroqSupplyChainAI()
 
 // Helper functions for specific use cases
-export const generateSupplyChainInsight = async (data: any, question: string) => {
+export const generateSupplyChainInsight = async (data: Record<string, unknown>, question: string) => {
   return supplyChainAI.generateResponse(question, JSON.stringify(data))
 }
 
